@@ -1,26 +1,191 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 
-:root {
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --radius: 0.625rem;
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  /* Base color definitions */
   --background: #ffffff;
-  --foreground: #171717;
-}
+  --foreground: #222831;
+  --card: #ffffff;
+  --card-foreground: #222831;
+  --popover: #ffffff;
+  --popover-foreground: #222831;
+  --primary: #006d5b;
+  --primary-foreground: #ffffff;
+  --secondary: #f5f7fa;
+  --secondary-foreground: #006d5b;
+  --muted: #f5f7fa;
+  --muted-foreground: #6c757d;
+  --accent: #009688;
+  --accent-foreground: #ffffff;
+  --destructive: #e57373;
+  --border: #e0e0e0;
+  --input: #e0e0e0;
+  --ring: #009688;
+  --chart-1: #4db6ac;
+  --chart-2: #81c784;
+  --chart-3: #64b5f6;
+  --chart-4: #ffd54f;
+  --chart-5: #ffb74d;
+  --sidebar: #014451;
+  --sidebar-foreground: #ffffff;
+  --sidebar-primary: #036672;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #014451;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: #e0e0e0;
+  --sidebar-ring: #009688;
 
-@theme inline {
+  /* Color references */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary-hover: var(--sidebar-primary);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+.ant-picker-outlined:focus-within {
+  border-color: var(--primary) !important;
+  box-shadow: 0 0 0 0.5px var(--primary), 0 4px 12px rgba(0, 123, 255, 0.25) !important;
+}
+.ant-picker-outlined:hover {
+  border-color: var(--primary) !important;
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Custom range slider styles */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+  width: 100%;
+}
+
+/* Thumb */
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 16px;
+  width: 16px;
+  background-color: var(--primary);
+  border-radius: 50%;
+  border: none;
+  margin-top: -6px; /* half of the thumb height */
+}
+
+input[type="range"]::-moz-range-thumb {
+  height: 16px;
+  width: 16px;
+  background-color: var(--primary);
+  border-radius: 50%;
+  border: none;
+}
+
+/* Track */
+input[type="range"]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 4px;
+  background-color: #e0e0e0; /* light gray for the track */
+  border-radius: 4px;
+}
+
+input[type="range"]::-moz-range-track {
+  width: 100%;
+  height: 4px;
+  background-color: #e0e0e0;
+  border-radius: 4px;
+}
+
+/* Dual Range Slider Styles */
+.dual-range-slider {
+  --thumb-size: 16px;
+  --track-height: 4px;
+  --thumb-border: 2px;
+}
+
+.dual-range-slider .track {
+  transition: background-color 0.2s ease;
+}
+
+.dual-range-slider .thumb {
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.dual-range-slider .thumb:hover {
+  transform:  scale(1.1);
+  box-shadow: 0 2px 8px rgba(0, 109, 91, 0.3);
+}
+
+.dual-range-slider .thumb:active {
+  transform: scale(1.15);
+  box-shadow: 0 4px 12px rgba(0, 109, 91, 0.4);
+}
+
+.dual-range-slider .selected-range {
+  transition: left 0.1s ease, width 0.1s ease;
+}
+
+/* Recharts Legend Text Size */
+.recharts-legend-item-text {
+  font-size: 0.75rem !important; /* 12px */
+  line-height: 1rem !important;
+}
+
+.recharts-legend-item {
+  font-size: 0.75rem !important; /* 12px */
+}
+
+/* Custom thin, light scrollbar for horizontal and vertical scrollbars */
+.custom-scrollbar::-webkit-scrollbar {
+  height: 8px; /* horizontal scrollbar height */
+  width: 8px;  /* vertical scrollbar width */
+  background: #f3f4f6; /* light background */
+  border-radius: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #e5e7eb; /* lighter thumb */
+  border-radius: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #d1d5db; /* slightly darker on hover */
+}
+
+/* For Firefox */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #e5e7eb #f3f4f6;
 }
